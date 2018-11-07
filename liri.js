@@ -8,13 +8,10 @@ var keys = require('./keys.js');
 //-----------------------------------------------------------------------------------------------------------------------
 
 var concertThis = function(value) {      //Bands in Town API request function for "concert-this" command
-//if (command === "concert-this") {
 
     var requestURL = "https://rest.bandsintown.com/artists/" + value + "/events?app_id=" + keys.bandsInTown.id;
-    console.log(requestURL);
 
 request(requestURL, function (error, response, body) {
-  console.log(requestURL);
 
   if (error) {
     return console.log('error:', error); // Print the error if one occurred
@@ -33,21 +30,16 @@ request(requestURL, function (error, response, body) {
   console.log("------------------------------------------------------------");
   };
 });
-console.log("I'm here");
-
-//};
 };
 
 //-----------------------------------------------------------------------------------------------------------------------
 
 var spotifyThisSong = function(value) {     //Spotify node package request for "spotify-this-song" command
-//if (command === "spotify-this-song") {
+    
     if (value === "") {
       value = "the sign";
-    } else {
-      value = process.argv.slice(3).join(" ");
     };
-  
+    
     var spotify = new Spotify({
       id: keys.spotify.id,
       secret: keys.spotify.secret
@@ -67,20 +59,17 @@ var spotifyThisSong = function(value) {     //Spotify node package request for "
     console.log("------------------------------------------------------------");
     };
     });
-  //};
 };
 
 //-----------------------------------------------------------------------------------------------------------------------
 
 var movieThis = function(value) {        //OMDB API request function for "movie-this" command
-//if (command === "movie-this") {
 
   if (value === "") {
     value = "mr+nobody";
   };
 
   var requestURL = "http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=" + keys.omdb.id;
-  console.log(requestURL);
 
  request(requestURL, function (error, response, body) {
   if (error) {
@@ -103,13 +92,11 @@ var movieThis = function(value) {        //OMDB API request function for "movie-
   console.log("Movie Actors: " + body.Actors);
   console.log("------------------------------------------------------------");
 });
-//};
 };
 
 //-----------------------------------------------------------------------------------------------------------------------
 
 var doWhatItSays = function() {       //fs node package read to retrieve command and value
-//if (command === "do-what-it-says") {
 
   fs.readFile("random.txt", "utf8", function(error, data) {
     if (error) {
@@ -121,13 +108,15 @@ var doWhatItSays = function() {       //fs node package read to retrieve command
     switch(results[0]) {
       case 'spotify-this-song':
         spotifyThisSong(results[1]);
+        break;
       case 'movie-this':
         movieThis(results[1]);
+        break;
       case 'concert-this':
         concertThis(results[1]);
+        break;
     };
   });
-//};
 };
 
 //-----------------------------------------------------------------------------------------------------------------------
@@ -138,10 +127,15 @@ var value = process.argv.slice(3).join("+");
 switch(command) {
   case 'concert-this':
     concertThis(value);
+    break;
   case 'spotify-this-song':
+    value = process.argv.slice(3).join(" ");
     spotifyThisSong(value);
+    break;
   case 'movie-this':
     movieThis(value);
+    break;
   case 'do-what-it-says':
     doWhatItSays();
+    break;
 };
