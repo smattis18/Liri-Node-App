@@ -15,5 +15,5 @@ This is a node app called LIRI (Language Interpretation and Recognition Interfac
 
 ### Watch the App in Action!
 
-(https://github.com/smattis18/Liri-Node-App/blob/master/node_liri.webm)
+(video link available upon request)
 
